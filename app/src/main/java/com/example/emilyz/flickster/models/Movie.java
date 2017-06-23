@@ -10,7 +10,6 @@ import org.parceler.Parcel;
 
 @Parcel //annotation indicates class is Parcelable
 public class Movie {
-
     //values from API
     // fields must be public for parceler
     String title;
@@ -18,6 +17,7 @@ public class Movie {
     String posterPath; //only the path
     String backDropPath;
     Double voteAverage;
+    int id;
 
     // no-arg, empty constructor required for Parceler
     public Movie() { }
@@ -30,6 +30,7 @@ public class Movie {
         posterPath = object.getString("poster_path");
         backDropPath = object.getString("backdrop_path");
         voteAverage = object.getDouble("vote_average");
+        id = object.getInt("id");
 
     }
 
@@ -52,5 +53,9 @@ public class Movie {
 
     public Double getVoteAverage() {
         return voteAverage;
+    }
+
+    public int getId() {
+        return id;
     }
 }
