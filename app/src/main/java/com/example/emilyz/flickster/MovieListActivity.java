@@ -19,6 +19,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 public class MovieListActivity extends AppCompatActivity {
@@ -37,7 +39,7 @@ public class MovieListActivity extends AppCompatActivity {
     //list of current playing movies
     ArrayList<Movie> movies;
     //recycler view
-    RecyclerView rvMovies;
+    @BindView(R.id.rvMovies) RecyclerView rvMovies;
     //adapter that is wired to recycler view
     MovieAdapter adapter;
     //image config
@@ -55,7 +57,8 @@ public class MovieListActivity extends AppCompatActivity {
         adapter = new MovieAdapter(movies);
 
         //resolve the recycler view and connect a layout manager and the adapter
-        rvMovies = (RecyclerView) findViewById(R.id.rvMovies);
+        ButterKnife.bind(this);
+        /**rvMovies = (RecyclerView) findViewById(R.id.rvMovies);*/
         rvMovies.setLayoutManager(new LinearLayoutManager(this));
         rvMovies.setAdapter(adapter);
 
@@ -145,4 +148,6 @@ public class MovieListActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
         }
     }
+
+
 }
