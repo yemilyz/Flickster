@@ -17,7 +17,9 @@ public class Movie {
     String posterPath; //only the path
     String backDropPath;
     Double voteAverage;
+    String releaseDate;
     int id;
+    //String videoKey;
 
     // no-arg, empty constructor required for Parceler
     public Movie() { }
@@ -31,6 +33,8 @@ public class Movie {
         backDropPath = object.getString("backdrop_path");
         voteAverage = object.getDouble("vote_average");
         id = object.getInt("id");
+        releaseDate = object.getString("release_date");
+        //videoKey = object.getString("key");
 
     }
 
@@ -46,16 +50,19 @@ public class Movie {
         return posterPath;
     }
 
-    public String getBackDropPath() {
+    public String getBackDropPath() { return backDropPath; }
 
-        return backDropPath;
-    }
 
     public Double getVoteAverage() {
         return voteAverage;
     }
 
-    public int getId() {
-        return id;
-    }
+    public String getReleaseDate() { return releaseDate; }
+
+    public int getId() { return id; }
+
+    //public String getVideoKey() { return videoKey; }
+
+
+
 }

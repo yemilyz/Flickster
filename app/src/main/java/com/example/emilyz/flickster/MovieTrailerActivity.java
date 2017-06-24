@@ -17,11 +17,14 @@ import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 import static com.example.emilyz.flickster.MovieListActivity.API_BASE_URL;
 import static com.example.emilyz.flickster.MovieListActivity.API_KEY_PARAM;
 import com.example.emilyz.flickster.models.Movie;
+import com.example.emilyz.flickster.models.Video;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -33,39 +36,24 @@ public class MovieTrailerActivity extends YouTubeBaseActivity {
 
     public final static String TAG = "MovieTrailerActivity";
 
+    private ArrayList<Video> trailers;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_trailer);
 
-        //initialize client
         client = new AsyncHttpClient();
 
-        // temporary test video id -- TODO replace with movie trailer video id
-        final String videoId = "tKodtNFpzBA";
-
+        trailers = new ArrayList<>();
         movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
+        getTrailer();
 
-        // resolve the player view from the layout
-        YouTubePlayerView playerView = (YouTubePlayerView) findViewById(R.id.player);
+        // temporary test video id -- TODO replace with movie trailer video id
+        //final String videoId = movie.getKey;
 
-        // initialize with API key stored in secrets.xml
-        playerView.initialize(getString(R.string.api_youtube), new YouTubePlayer.OnInitializedListener() {
-            @Override
-            public void onInitializationSuccess(YouTubePlayer.Provider provider,
-                                                YouTubePlayer youTubePlayer, boolean b) {
-                //play video
-                youTubePlayer.loadVideo(videoId);
-            }
 
-            @Override
-            public void onInitializationFailure(YouTubePlayer.Provider provider,
-                                                YouTubeInitializationResult youTubeInitializationResult) {
-                // log the error
-                Log.e("MovieTrailerActivity", "Error initializing YouTube player");
-                Toast.makeText(MovieTrailerActivity.this, "Youtube Failed!", Toast.LENGTH_SHORT).show();
-            }
-        });
+
     }
     private void getTrailer() {
         //create url
@@ -77,15 +65,20 @@ public class MovieTrailerActivity extends YouTubeBaseActivity {
         client.get(url,params,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                JSONArray trailersJsonResults = null;
                 try {
-                    JSONArray results = response.getJSONArray("results");
-                    if (results.length() > 0){
-                        Movie key = new Movie(results.getJSONObject(0));
-                    }
+
+                    //JSONArray results = response.getJSONArray("results");
+                    //if (results.length() > 0){
+                        //Movie key = new Movie(results.getJSONObject(0));
+                    trailersJsonResults = response.getJSONArray("results");
+                    trailers.addAll(Video.fromJSONArray(trailersJsonResults));
+                    setUpYoutube();
                 } catch (JSONException e) {
                     logError("Failed to parse movie id", e, true);
                 }
             }
+
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
@@ -93,6 +86,42 @@ public class MovieTrailerActivity extends YouTubeBaseActivity {
             }
         });
     }
+    private void setUpYoutube() {
+        String selected = null;
+        Video trailer;
+        for (int i = 0; i < trailers.size() && selected == null; i++) {
+            trailer = trailers.get(i);
+            if (trailer.getVideoType().equals("Trailer")) {
+                selected = trailer.getVideoKey();
+            }
+        }
+
+        final String trailerID = selected;
+        if (trailerID != null) {
+
+            // resolve the player view from the layout
+            YouTubePlayerView playerView = (YouTubePlayerView) findViewById(R.id.player);
+
+            // initialize with API key stored in secrets.xml
+            playerView.initialize(getString(R.string.api_youtube), new YouTubePlayer.OnInitializedListener() {
+                @Override
+                public void onInitializationSuccess(YouTubePlayer.Provider provider,
+                                                    YouTubePlayer youTubePlayer, boolean b) {
+                    //play video
+                    youTubePlayer.loadVideo(trailerID);
+                }
+
+                @Override
+                public void onInitializationFailure(YouTubePlayer.Provider provider,
+                                                    YouTubeInitializationResult youTubeInitializationResult) {
+                    // log the error
+                    Log.e("MovieTrailerActivity", "Error initializing YouTube player");
+                    Toast.makeText(MovieTrailerActivity.this, "Youtube Failed!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
     private void logError(String message, Throwable error, boolean alertUser){
         //always log error
         Log.e(TAG, message, error);

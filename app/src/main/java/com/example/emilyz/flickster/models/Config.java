@@ -3,11 +3,14 @@ package com.example.emilyz.flickster.models;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 /**
  * Created by emilyz on 6/21/17.
  */
 
+
+@Parcel
 public class Config {
     //the base url for loading images
     String imageBaseUrl;
