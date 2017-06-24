@@ -24,6 +24,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
+import static com.example.emilyz.flickster.R.id.ibVideo;
+
 /**
  * Created by emilyz on 6/21/17.
  */
@@ -35,6 +37,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     Config config;
     //context for rendering
     Context context;
+
+    ImageButton ibVideo;
 
     //intialize with list
     public MovieAdapter(ArrayList<Movie> movies){
@@ -91,6 +95,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 .placeholder(placeholderId)
                 .error(placeholderId)
                 .into(imageView);
+
     }
 
     //returns size of entire data set

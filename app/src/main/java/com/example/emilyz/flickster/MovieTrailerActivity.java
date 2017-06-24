@@ -14,6 +14,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
+import static com.example.emilyz.flickster.ConnectionActivity.checkConnection;
 import static com.example.emilyz.flickster.MovieListActivity.API_BASE_URL;
 import static com.example.emilyz.flickster.MovieListActivity.API_KEY_PARAM;
 import com.example.emilyz.flickster.models.Movie;
@@ -51,7 +52,6 @@ public class MovieTrailerActivity extends YouTubeBaseActivity {
 
         // temporary test video id -- TODO replace with movie trailer video id
         //final String videoId = movie.getKey;
-
 
 
     }
