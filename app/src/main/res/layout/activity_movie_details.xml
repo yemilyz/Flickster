@@ -14,7 +14,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="@drawable/view_trailer_button"
+        android:background="#dfe3fa"
+        android:layout_margin="5dp"
         />
 
     <TextView
@@ -30,6 +31,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:background="#dfe3fa"
+        android:layout_margin="5dp"
         />
 
     <RatingBar
@@ -42,7 +44,8 @@
         android:layout_below="@+id/tvReleaseDate"
         android:numStars="5"
         android:rating="0.5"
-        android:background="#dfe3fa"/>
+        android:background="#dfe3fa"
+        android:layout_margin="5dp"/>
 
     <TextView
         android:id="@+id/tvOverview"
@@ -56,7 +59,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:background="#dfe3fa"/>
+        android:background="#dfe3fa"
+        android:layout_margin="5dp"/>
 
     <TextView
         android:id="@+id/tvReleaseDate"
@@ -68,5 +72,6 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tvTitle"
         android:text="Release date"
-        android:background="#dfe3fa"/>
+        android:background="#dfe3fa"
+        android:layout_margin="5dp"/>
 </RelativeLayout>

@@ -50,7 +50,6 @@ public class MovieTrailerActivity extends YouTubeBaseActivity {
         movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
         getTrailer();
 
-        // temporary test video id -- TODO replace with movie trailer video id
         //final String videoId = movie.getKey;
 
 

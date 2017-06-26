@@ -18,6 +18,7 @@ public class Config {
     String posterSize;
     //backdrop size to use when fetching images
     String backdropSize;
+    String otherSize;
 
     public Config(){}
 
@@ -31,9 +32,11 @@ public class Config {
         posterSize = posterSizeOptions.optString(3, "w342");
         JSONArray backdropSizeOptions = images.getJSONArray("backdrop_sizes");
         backdropSize = backdropSizeOptions.optString(1, "w780");
+        otherSize = backdropSizeOptions.optString(3, "w1280");
     }
     //helper method to create urls
     public String getImageUrl(String size, String path){
+
         return String.format("%s%s%s", imageBaseUrl, size, path); //concatenate all three
 
     }
@@ -49,4 +52,6 @@ public class Config {
     public String getBackdropSize() {
         return backdropSize;
     }
+
+    public String getOtherSize() { return otherSize; }
 }
